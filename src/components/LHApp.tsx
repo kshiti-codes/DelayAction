@@ -6,6 +6,9 @@ import DisruptionSetup from "./DisruptionSetup";
 import FlightList from "./FlightList";
 import ActionPlanCard from "./ActionPlanCard";
 import StatusLog from "./StatusLog";
+import appLogo from "../assets/logoda.png";
+import lufthansaLogo from "../assets/lufthansa.png";
+import geminiLogo from "../assets/gemini3.jpeg";
 import type { WeatherType, DisruptionConfig, ActionPlan, AppStep, LogEntry, Flight } from "../types/lh";
 
 // ─── Gemini prompt helpers ────────────────────────────────────────────────────
@@ -181,23 +184,33 @@ addLog(`${affected.length} flights in disruption window ${config.startTime}–${
         button:focus-visible { outline: 2px solid #FCD34D; outline-offset: 2px; }
       `}</style>
 
-      <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#F3F4F6" }}>
+      <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#F3F4F6", width: "100%" }}>
 
         {/* ── Header ──────────────────────────────────────────────────────── */}
-        <header style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 32px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 34, height: 34, background: "#FCD34D", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 800, color: "#78350F" }}>
-              LH
-            </div>
+        <header style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 32px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, width: "100%" }}>
+          {/* Left — App logo */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <img src={appLogo} alt="App logo" style={{ height: 36, width: "auto" }} />
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: "#111827" }}>Disruption Response</div>
               <div style={{ fontSize: 11, color: "#9CA3AF" }}>Lufthansa Operations · Frankfurt Hub</div>
             </div>
           </div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <Dot active={true}  label="LH API" />
-            <Dot active={true}  label="Gemini AI" />
-            <Dot active={step === "done"} label="Plan Ready" />
+
+          {/* Right — Partner logos + status dots */}
+          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <img
+                src={lufthansaLogo}
+                alt="Lufthansa"
+                style={{ height: 28, width: "auto", objectFit: "contain" }}
+              />
+              <img
+                src={geminiLogo}
+                alt="Gemini"
+                style={{ height: 24, width: "auto", objectFit: "contain" }}
+              />
+            </div>
           </div>
         </header>
 
