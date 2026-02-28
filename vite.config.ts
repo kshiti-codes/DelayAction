@@ -1,7 +1,20 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-})
+  resolve: {
+    alias: {
+      axios: path.resolve(__dirname, 'src/shims/axios.ts'),
+      recharts: path.resolve(__dirname, 'src/shims/recharts.ts'),
+      clsx: path.resolve(__dirname, 'src/shims/clsx.ts'),
+    }
+  },
+  server: {
+    port: 5173,
+    proxy: {
+      '/api': 'http://localhost:3001'
+    }
+  }
+});
