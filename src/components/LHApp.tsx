@@ -192,8 +192,8 @@ addLog(`${affected.length} flights in disruption window ${config.startTime}–${
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <img src={appLogo} alt="App logo" style={{ height: 36, width: "auto" }} />
             <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#111827" }}>Disruption Response</div>
-              <div style={{ fontSize: 11, color: "#9CA3AF" }}>Lufthansa Operations · Frankfurt Hub</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: "#111827" }}>Delay Action</div>
+              <div style={{ fontSize: 11, color: "#9CA3AF" }}>From delay risk to actions</div>
             </div>
           </div>
 
@@ -223,12 +223,12 @@ addLog(`${affected.length} flights in disruption window ${config.startTime}–${
           <aside style={{ background: "#fff", borderRight: "1px solid #E5E7EB", padding: 28, display: "flex", flexDirection: "column", gap: 24 }}>
 
             {/* Step 1 */}
-            <Section title="1  Weather Event" icon="🌩">
+            <Section title="Weather Event" icon="🌩">
               <WeatherPicker selected={weather} onSelect={setWeather} />
             </Section>
 
             {/* Step 2 */}
-            <Section title="2  Disruption Scope" icon="📍">
+            <Section title="Disruption Scope" icon="📍">
               <DisruptionSetup config={config} onChange={setConfig} />
             </Section>
 
