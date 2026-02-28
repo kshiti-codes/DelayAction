@@ -122,17 +122,34 @@ export default function LHApp() {
       addLog("Connecting to Lufthansa API…");
       const token = await fetchLHToken();
       addLog("Token acquired", "success");
+      console.log("LH Token:", token);
       const raw = await fetchLHFlights(token, config.airport);
+      console.log("LH Flights:", raw);
       addLog(`${raw.length} flights retrieved from live schedule`, "success");
       liveFlights = raw;
     } catch (err: any) {
+      console.error("LH API error:", err);
       addLog(`LH API unavailable — using cached schedule (${err.message})`, "warn");
       liveFlights = FALLBACK_FLIGHTS;
     }
 
-    const affected = liveFlights.filter(f => f.origin === config.airport || f.destination === config.airport);
-    setFlights(affected);
-    addLog(`${affected.length} flights affected, ${affected.reduce((s, f) => s + f.passengers, 0).toLocaleString()} passengers at risk`, "success");
+    const toMins = (hhmm: string) => {
+  const [h, m] = hhmm.split(":").map(Number);
+  return h * 60 + m;
+};
+const windowStart = toMins(config.startTime);
+const windowEnd   = windowStart + Number(config.duration) * 60;
+
+const affected = liveFlights.filter(f => {
+  const dep = toMins(f.departure);
+  const arr = toMins(f.arrival);
+  const departingDuringStorm = f.origin === config.airport && dep >= windowStart && dep <= windowEnd;
+  const arrivingDuringStorm  = f.destination === config.airport && arr >= windowStart && arr <= windowEnd;
+  return departingDuringStorm || arrivingDuringStorm;
+});
+
+setFlights(affected);
+addLog(`${affected.length} flights in disruption window ${config.startTime}–${windowEnd}`, "success");
 
     // ── 2. Ask Gemini ─────────────────────────────────────────────────────────
     setStep("analyzing");

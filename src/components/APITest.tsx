@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 // ─── Config (same as fetch_lh_flights.ts) ─────────────────────────────────────
-const LH_CLIENT_ID     = "u4bnhm9uhcmq5yjt588sarh7";
-const LH_CLIENT_SECRET = "TYCf4nYDvfwc9StPyBnk";
+const LH_CLIENT_ID     = import.meta.env.VITE_LH_CLIENT_ID as string;
+const LH_CLIENT_SECRET = import.meta.env.VITE_LH_CLIENT_SECRET as string;
 const LH_BASE_URL      = "https://api.lufthansa.com/v1";
 const GEMINI_API_KEY   = import.meta.env.VITE_GEMINI_API_KEY as string;
 const GEMINI_URL       = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`;

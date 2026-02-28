@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Flight } from "../types/lh";
 
 interface Props {
@@ -13,10 +14,15 @@ const STATUS_STYLE: Record<string, { bg: string; color: string }> = {
   "Delayed":  { bg: "#FFF7ED", color: "#9A3412" },
 };
 
+const PAGE_SIZE = 6;
+
 export default function FlightList({ flights }: Props) {
+  const [page, setPage] = useState(0);
   if (flights.length === 0) return null;
 
-  const totalPax = flights.reduce((s, f) => s + f.passengers, 0);
+  const totalPages  = Math.ceil(flights.length / PAGE_SIZE);
+  const pageFlights = flights.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
+  const totalPax    = flights.reduce((s, f) => s + f.passengers, 0);
   const totalRev = flights.reduce((s, f) => s + f.revenue, 0);
 
   return (
@@ -48,7 +54,7 @@ export default function FlightList({ flights }: Props) {
             </tr>
           </thead>
           <tbody>
-            {flights.map((f, i) => {
+            {pageFlights.map((f, i) => {
               const st = STATUS_STYLE[f.status] ?? STATUS_STYLE["On Time"];
               return (
                 <tr key={i} style={{ borderBottom: i < flights.length - 1 ? "1px solid #F3F4F6" : "none" }}>
@@ -74,6 +80,30 @@ export default function FlightList({ flights }: Props) {
           </tbody>
         </table>
       </div>
+
+      {totalPages > 1 && (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderTop: "1px solid #E5E7EB" }}>
+          <span style={{ fontSize: 12, color: "#9CA3AF" }}>
+            Showing {page * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE + PAGE_SIZE, flights.length)} of {flights.length} flights
+          </span>
+          <div style={{ display: "flex", gap: 6 }}>
+            <button onClick={() => setPage(p => p - 1)} disabled={page === 0}
+              style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #E5E7EB", background: page === 0 ? "#F9FAFB" : "#fff", color: page === 0 ? "#D1D5DB" : "#374151", cursor: page === 0 ? "not-allowed" : "pointer", fontSize: 13, fontFamily: "inherit" }}>
+              ← Prev
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button key={i} onClick={() => setPage(i)}
+                style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #E5E7EB", background: page === i ? "#FCD34D" : "#fff", color: page === i ? "#78350F" : "#374151", fontWeight: page === i ? 700 : 400, cursor: "pointer", fontSize: 13, fontFamily: "inherit" }}>
+                {i + 1}
+              </button>
+            ))}
+            <button onClick={() => setPage(p => p + 1)} disabled={page === totalPages - 1}
+              style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #E5E7EB", background: page === totalPages - 1 ? "#F9FAFB" : "#fff", color: page === totalPages - 1 ? "#D1D5DB" : "#374151", cursor: page === totalPages - 1 ? "not-allowed" : "pointer", fontSize: 13, fontFamily: "inherit" }}>
+              Next →
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

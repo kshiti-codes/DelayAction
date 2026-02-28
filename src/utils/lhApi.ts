@@ -1,9 +1,9 @@
 import type { Flight } from "../types/lh";
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-const LH_CLIENT_ID     = "u4bnhm9uhcmq5yjt588sarh7";
-const LH_CLIENT_SECRET = "TYCf4nYDvfwc9StPyBnk";
-const LH_BASE_URL      = "https://api.lufthansa.com/v1";
+const LH_CLIENT_ID     = import.meta.env.VITE_LH_CLIENT_ID as string;
+const LH_CLIENT_SECRET = import.meta.env.VITE_LH_CLIENT_SECRET as string;
+const LH_BASE_URL = "/lh-api";
 
 // ─── Lookup Tables ────────────────────────────────────────────────────────────
 const AIRCRAFT_DISPLAY: Record<string, string> = {
@@ -99,7 +99,6 @@ function formatFlights(raw: LHFlightAggregate[]): Flight[] {
   return raw
     .filter(f => f.legs?.length > 0 && f.legs[0]?.aircraftDepartureTimeLT != null)
     .sort((a, b) => a.legs[0].aircraftDepartureTimeLT! - b.legs[0].aircraftDepartureTimeLT!)
-    .slice(0, 12)
     .map(f => {
       const leg      = f.legs[0];
       const aircraft = AIRCRAFT_DISPLAY[leg.aircraftType] ?? leg.aircraftType;

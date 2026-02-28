@@ -14,7 +14,12 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': 'http://localhost:3001'
+      '/api': 'http://localhost:3001',
+      '/lh-api': {
+        target: 'https://api.lufthansa.com/v1',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/lh-api/, ''),
+      },
     }
   }
 });
