@@ -5,7 +5,7 @@ const LH_CLIENT_ID     = "u4bnhm9uhcmq5yjt588sarh7";
 const LH_CLIENT_SECRET = "TYCf4nYDvfwc9StPyBnk";
 const LH_BASE_URL      = "https://api.lufthansa.com/v1";
 const GEMINI_API_KEY   = import.meta.env.VITE_GEMINI_API_KEY as string;
-const GEMINI_URL       = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+const GEMINI_URL       = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`;
 
 function toSSIMDate(date: Date): string {
   const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
