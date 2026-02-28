@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/lh-api/(.*)",
+      "destination": "https://api.lufthansa.com/v1/$1"
+    }
+  ]
+}
