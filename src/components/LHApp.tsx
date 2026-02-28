@@ -187,7 +187,7 @@ addLog(`${affected.length} flights in disruption window ${config.startTime}–${
       <div style={{ fontFamily: "'DM Sans', sans-serif", minHeight: "100vh", background: "#F3F4F6", width: "100%" }}>
 
         {/* ── Header ──────────────────────────────────────────────────────── */}
-        <header style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 32px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, width: "100%" }}>
+        <header style={{ background: "#fff", borderBottom: "1px solid #E5E7EB", padding: "0 32px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 50, width: "100%", boxSizing: "border-box" }}>
           {/* Left — App logo */}
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <img src={appLogo} alt="App logo" style={{ height: 36, width: "auto" }} />
@@ -200,15 +200,17 @@ addLog(`${affected.length} flights in disruption window ${config.startTime}–${
           {/* Right — Partner logos + status dots */}
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <p style={{ fontSize: 12, color: "#9CA3AF" }}>Made for </p>
               <img
                 src={lufthansaLogo}
                 alt="Lufthansa"
                 style={{ height: 28, width: "auto", objectFit: "contain" }}
               />
+              <p style={{ fontSize: 12, color: "#9CA3AF" }}> Powered by </p>
               <img
                 src={geminiLogo}
                 alt="Gemini"
-                style={{ height: 24, width: "auto", objectFit: "contain" }}
+                style={{ height: 40, width: "auto", objectFit: "contain" }}
               />
             </div>
           </div>
